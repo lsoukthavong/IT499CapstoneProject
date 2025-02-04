@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Green With Ivy Online Nursery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Green With Ivy</h1>
+        <h2>Login</h2>
+        <nav>
+            <a href="index.html" id="home-icon"><i class="fas fa-home"></i><span class="tooltip">Home</span></a>
+            <a href="cart.html" id="cart-icon"><i class="fas fa-shopping-cart"></i><span class="tooltip">View Cart</span></a>
+            <a href="login.html" id="login-icon"><i class="fas fa-user"></i><span class="tooltip">Login</span></a>
+            <a href="update-inventory.html" id="update-icon" class="hidden"><i class="fas fa-edit"></i><span class="tooltip">Update Plants</span></a>
+        </nav>
+    </header>
+    <main>
+        <form id="login-form" class="vertical-form">
+            <label for="server">Server:</label>
+            <input type="text" id="server" name="server" value='localhost' required>
+            <label for="user">Username:</label>
+            <input type="text" id="user" name="user" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div id="login-message"></div>
+    </main>
+    <footer>
+        <p>© 2024 Green with Ivy Online Nursery. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const server = document.getElementById('server').value;
+            const user = document.getElementById('user').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:5501/connect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ server, user, password })
+                });
+                const data = await response.json();
+                document.getElementById('login-message').textContent = data.message;
+                if (response.ok) {
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                document.getElementById('login-message').textContent = 'Login failed. Please try again.';
+            }
+        });
+    </script>
+</body>
+</html>
