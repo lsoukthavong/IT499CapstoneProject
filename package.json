@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0",
+    "stripe": "^17.6.0",
+    "ws": "^8.18.0"
+  }
+}
